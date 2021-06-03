@@ -2,11 +2,17 @@
 	"name": "subtitle-finder",
 	"version": "0.1.0",
 	"description": "subtitle CLI to search subtitles in most popular providers",
-	"main": "lib/index.ts",
+	"main": "dist/main.js",
 	"engines": {
 		"node": ">=14"
 	},
 	"scripts": {
+		"start": "node .",
+		"build": "npm run webpack -- --env mode=production",
+		"build:analyzer": "npm run build -- --env presets.analyzer",
+		"build:dev": "npm run build -- --env mode=development",
+		"dev": "npm run build:dev -- --watch",
+		"webpack": "webpack",
 		"format": "npm run prettier -- --write",
 		"format:check": "npm run prettier -- --check",
 		"prettier": "prettier --ignore-path .gitignore \".\"",
@@ -35,7 +41,20 @@
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-conventional": "^12.1.4",
+		"husky": "^6.0.0",
+		"nodemon-webpack-plugin": "^4.5.2",
 		"prettier": "^2.3.0",
-		"husky": "^6.0.0"
+		"webpack": "^5.38.1",
+		"webpack-bundle-analyzer": "^4.4.2",
+		"webpack-cli": "^4.7.0",
+		"webpack-config-organizer": "^0.2.2",
+		"webpack-node-externals": "^3.0.0"
+	},
+	"webpack-config-organizer": {
+		"base": "configs/webpack",
+		"presets": {
+			"path": ".",
+			"prefix": "preset."
+		}
 	}
 }
