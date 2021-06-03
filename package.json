@@ -10,7 +10,8 @@
 		"format": "npm run prettier -- --write",
 		"format:check": "npm run prettier -- --check",
 		"prettier": "prettier --ignore-path .gitignore \".\"",
-		"test": "jest"
+		"test": "jest",
+		"prepare": "husky install"
 	},
 	"repository": {
 		"type": "git",
@@ -32,6 +33,9 @@
 	},
 	"homepage": "https://github.com/theFiero/subtitle-finder#readme",
 	"devDependencies": {
-		"prettier": "^2.3.0"
+		"@commitlint/cli": "^12.1.4",
+		"@commitlint/config-conventional": "^12.1.4",
+		"prettier": "^2.3.0",
+		"husky": "^6.0.0"
 	}
 }
