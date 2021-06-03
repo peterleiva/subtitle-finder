@@ -7,7 +7,7 @@ const nodeExternals = require('webpack-node-externals');
  * @param {boolean} [env.clean = false]
  * @return {import("webpack").Configuration}
  */
-module.exports = organizer(({ clean = false }) => {
+module.exports = organizer(['typescript'], ({ clean = false }) => {
   return {
     target: 'node',
     externalsPresets: { node: true },
@@ -15,7 +15,7 @@ module.exports = organizer(({ clean = false }) => {
 
     context: path.resolve(__dirname, 'lib'),
 
-    entry: './index.js',
+    entry: './index.ts',
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, 'dist'),
