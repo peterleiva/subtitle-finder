@@ -1,0 +1,57 @@
+name: Code Style
+on: [push]
+
+jobs:
+  format:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: ['14.x', '16.x']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Installing
+        run: npm ci
+      - name: Checking format with prettier
+        run: npm run format:check
+
+  lint:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: ['14.x', '16.x']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Installing
+        run: npm ci
+      - name: Linting the codebase
+        run: npm run lint
+
+  typecheck:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: ['14.x', '16.x']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Installing
+        run: npm ci
+      - name: Linting the codebase
+        run: npm run typecheck:app
