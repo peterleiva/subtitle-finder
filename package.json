@@ -1,31 +1,37 @@
 {
-  "name": "subtitle-finder",
-  "version": "0.1.0",
-  "description": "subtitle CLI to search subtitles in most popular providers",
-  "main": "lib/index.ts",
-  "engines": {
-    "node": ">=14"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/theFiero/subtitle-finder.git"
-  },
-  "keywords": [
-    "crawler",
-    "brazil",
-    "subtitles",
-    "brasil",
-    "subtitle-downloader",
-    "pt-br",
-    "cli"
-  ],
-  "author": "Fiero <github.gonopores@slmail.me>",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/theFiero/subtitle-finder/issues"
-  },
-  "homepage": "https://github.com/theFiero/subtitle-finder#readme"
+	"name": "subtitle-finder",
+	"version": "0.1.0",
+	"description": "subtitle CLI to search subtitles in most popular providers",
+	"main": "lib/index.ts",
+	"engines": {
+		"node": ">=14"
+	},
+	"scripts": {
+		"format": "npm run prettier -- --write",
+		"format:check": "npm run prettier -- --check",
+		"prettier": "prettier --ignore-path .gitignore \".\"",
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/theFiero/subtitle-finder.git"
+	},
+	"keywords": [
+		"crawler",
+		"brazil",
+		"subtitles",
+		"brasil",
+		"subtitle-downloader",
+		"pt-br",
+		"cli"
+	],
+	"author": "Fiero <github.gonopores@slmail.me>",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/theFiero/subtitle-finder/issues"
+	},
+	"homepage": "https://github.com/theFiero/subtitle-finder#readme",
+	"devDependencies": {
+		"prettier": "^2.3.0"
+	}
 }
