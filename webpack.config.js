@@ -1,6 +1,7 @@
 const path = require('path');
 const { organizer } = require('webpack-config-organizer');
 const nodeExternals = require('webpack-node-externals');
+const { BannerPlugin } = require('webpack');
 
 /**
  * @param {object} [env]
@@ -15,12 +16,27 @@ module.exports = organizer(['typescript'], ({ clean = false }) => {
 
     context: path.resolve(__dirname, 'lib'),
 
-    entry: './index.ts',
+    entry: {
+      main: 'index.ts',
+      search: {
+        import: 'commands/search/index.ts',
+        filename: 'commands/[name].js',
+      },
+    },
+
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, 'dist'),
       clean,
     },
+
+    plugins: [
+      new BannerPlugin({
+        banner: '#!/usr/bin/env node',
+        raw: true,
+        entryOnly: true,
+      }),
+    ],
 
     resolve: {
       modules: [path.resolve(__dirname, 'lib'), 'node_modules'],

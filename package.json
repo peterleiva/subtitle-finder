@@ -6,6 +6,10 @@
 	"engines": {
 		"node": ">=14"
 	},
+	"bin": {
+		"subtitle-finder": "dist/main.js",
+		"subtitle-finder-search": "dist/commands/search.js"
+	},
 	"scripts": {
 		"start": "node .",
 		"build": "npm run webpack -- --env mode=production",
@@ -51,6 +55,7 @@
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
 		"concurrently": "^6.2.0",
+		"dotenv": "^10.0.0",
 		"eslint": "^7.27.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-import-resolver-webpack": "^0.13.1",
@@ -79,7 +84,6 @@
 		}
 	},
 	"dependencies": {
-		"commander": "^8.1.0",
-		"dotenv": "^10.0.0"
+		"commander": "^8.1.0"
 	}
 }
