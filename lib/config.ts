@@ -4,8 +4,8 @@ config();
 
 const env = {
   legendasTv: {
-    username: process.env.LEGENDASTV_USERNAME,
-    password: process.env.LEGENDASTV_PASSWORD,
+    username: process.env.LEGENDAS_TV_USERNAME,
+    password: process.env.LEGENDAS_TV_PASSWORD,
   },
 };
 
