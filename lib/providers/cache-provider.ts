@@ -28,7 +28,9 @@ export default class CacheProvider<T> {
   }
 
   async search(filter: SearchFilter): Promise<T> {
-    const file = this.#hasher.update(filter.keyword).digest('hex');
+    const file = this.#hasher
+      .update(filter.keyword.toLowerCase())
+      .digest('hex');
     const cache = flatCache.load(
       file,
       CacheProvider.CACHE_PATH + '/' + this.#cache.namespace
