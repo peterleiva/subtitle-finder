@@ -3,12 +3,11 @@ import { Browser, launch } from 'puppeteer';
 import { Provider, SearchFilter } from 'providers';
 import { Subtitle } from 'types';
 import scraper from './scraper';
-import flatCache from 'flat-cache';
 import { Scraper } from 'providers/types';
 
 const BASE_URL = 'http://legendas.tv';
 const SEARCH_PATH = '/busca';
-const CACHE_PATH = '/tmp/subtitle-finder/cache';
+const CACHE_PATH = '/tmp/subtitle-finder/cache/legendas-tv';
 
 export default class LegendasTvProvider implements Provider<Subtitle[]> {
   #scraper: Scraper<Subtitle>;
@@ -18,17 +17,11 @@ export default class LegendasTvProvider implements Provider<Subtitle[]> {
   }
 
   async search({ keyword }: SearchFilter): Promise<Subtitle[]> {
-    const cache = flatCache.load('legendas.tv-query', CACHE_PATH);
-
-    let subtitles: Subtitle[] | undefined = cache.getKey(keyword);
-
-    if (subtitles) {
-      console.info(`Found subtitles in cache`);
-      return subtitles;
-    }
+    const cacheKey = 'keyword';
 
     const url = new URL(SEARCH_PATH + '/' + keyword, BASE_URL);
     let browser: Browser | null = null;
+    let subtitles: Subtitle[] = [];
 
     try {
       browser = await launch();
@@ -43,15 +36,10 @@ export default class LegendasTvProvider implements Provider<Subtitle[]> {
       if (handlers.length === 0) {
         console.info(`No results found`);
         await browser.close();
-        return [];
+      } else {
+        const scrapers = handlers.map(this.#scraper);
+        subtitles = await Promise.all(scrapers);
       }
-
-      const scrapers = handlers.map(this.#scraper);
-
-      subtitles = await Promise.all(scrapers);
-
-      cache.setKey(keyword, subtitles);
-      cache.save();
     } finally {
       await browser?.close();
     }
