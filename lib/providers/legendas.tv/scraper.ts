@@ -67,6 +67,7 @@ export default function createScraper(): Scraper<Subtitle> {
       fileUrl,
       uploader,
       downloads,
+      language: 'Português Brasileiro',
       releasedAt,
     };
   };

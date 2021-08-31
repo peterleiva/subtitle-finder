@@ -4,6 +4,7 @@ export interface Subtitle {
   downloads?: string;
   uploader?: string;
   releasedAt?: Date;
-  source: string; // page where subtitle lives
+  source?: string; // html page where link is
   fileUrl: string; // director link to download the subtitle
+  language: string;
 }
