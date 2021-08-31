@@ -1,8 +1,27 @@
 import type { OptionValues } from 'commander';
-import { LegendasTvProvider } from 'providers';
+import { factory } from 'providers';
+import { Subtitle } from 'types';
+import chalk from 'chalk';
 
-// usar o imdb para realizar a busca?!
-// e após encontrar no imdb eu faço a busca no provedor correto
+function formatSubtitle({
+  id,
+  release,
+  releasedAt,
+  fileUrl,
+  language,
+  downloads,
+}: Subtitle): void {
+  console.info(
+    '(%s) %s - %s\n\t%s downloads / %s\n%s\n',
+    id,
+    chalk.green.bold(release),
+    chalk.yellow('' + releasedAt),
+    chalk.red.bold(downloads ?? '?'),
+    chalk.red.bold(language),
+    chalk.blue.underline(fileUrl)
+  );
+}
+
 export default async function query(
   keyword: string[],
   { verbose }: OptionValues
@@ -19,9 +38,30 @@ export default async function query(
   console.time('query');
 
   try {
-    const provider = new LegendasTvProvider();
-    const subtitles = await provider.search({ keyword: keyword.join(' ') });
-    console.log(subtitles);
+    const providers = factory();
+
+    const results = await Promise.allSettled(
+      providers.map(async provider =>
+        provider.search({ keyword: keyword.join(' ') })
+      )
+    );
+
+    const subtitles: Subtitle[] = results.reduce(
+      (subtitles: Subtitle[], providerResult) => {
+        if (providerResult.status === 'rejected') {
+          console.info(`Error searching provider\n%o`, providerResult.reason);
+          return subtitles;
+        } else {
+          return subtitles.concat(providerResult.value);
+        }
+      },
+      []
+    );
+
+    for (const subtitle of subtitles) {
+      formatSubtitle(subtitle);
+    }
+    console.info('found %d subtitles', subtitles.length);
   } catch (error) {
     console.error(`couldn't query legendas.tv provider\n%o`, error);
   }
