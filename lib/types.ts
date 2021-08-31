@@ -1,7 +1,7 @@
 export interface Subtitle {
   id: string;
   release: string;
-  downloads?: string;
+  downloads?: number;
   uploader?: string;
   releasedAt?: Date;
   source?: string; // html page where link is

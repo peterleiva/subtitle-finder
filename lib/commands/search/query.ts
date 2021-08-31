@@ -16,7 +16,7 @@ function formatSubtitle({
     '(%s) %s\n\t%s\n\t%s downloads / %s / %s\n\t%s\n\n',
     id,
     chalk.green.bold(release),
-    chalk.yellow('' + releasedAt),
+    chalk.yellow(releasedAt?.toLocaleString() ?? 'No Date'),
     chalk.red.bold(downloads ?? '?'),
     chalk.red.bold(language),
     chalk.blue.underline(provider),
@@ -28,15 +28,12 @@ export default async function query(
   keyword: string[],
   { verbose }: OptionValues
 ): Promise<void> {
-  // cria o provider
   // listar resultado:
   //  ano do produto (opcional)
   //  temporada e episódio (se for TV)
   //  sinopse (caso exista)
   //  link para o imdb
   //
-  // fazer a busca em 2 estágios?!
-  // primeiro no imdb/openmovies (ou outro parecido) e depois no proveder
   console.time('query');
 
   try {
