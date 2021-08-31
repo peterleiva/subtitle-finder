@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"declaration": true,
 		"composite": true,
-		"lib": ["DOM"],
+		"lib": ["DOM", "ES2021"],
 		"noImplicitAny": true,
 		"resolveJsonModule": true,
 		"outDir": "./dist",
