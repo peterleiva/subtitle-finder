@@ -69,6 +69,7 @@ export default function createScraper(): Scraper<Subtitle> {
       downloads,
       language: 'Português Brasileiro',
       releasedAt,
+      provider: 'legendas.tv',
     };
   };
 }

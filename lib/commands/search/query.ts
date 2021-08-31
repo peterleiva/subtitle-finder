@@ -10,14 +10,16 @@ function formatSubtitle({
   fileUrl,
   language,
   downloads,
+  provider,
 }: Subtitle): void {
   console.info(
-    '(%s) %s - %s\n\t%s downloads / %s\n%s\n',
+    '(%s) %s\n\t%s\n\t%s downloads / %s / %s\n\t%s\n\n',
     id,
     chalk.green.bold(release),
     chalk.yellow('' + releasedAt),
     chalk.red.bold(downloads ?? '?'),
     chalk.red.bold(language),
+    chalk.blue.underline(provider),
     chalk.blue.underline(fileUrl)
   );
 }

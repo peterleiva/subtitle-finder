@@ -7,4 +7,5 @@ export interface Subtitle {
   source?: string; // html page where link is
   fileUrl: string; // director link to download the subtitle
   language: string;
+  provider: string;
 }

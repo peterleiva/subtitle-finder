@@ -16,6 +16,7 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
     fileUrl: url,
     language: lang,
     downloads,
+    provider: 'opensubtitles.org',
   };
 }
 
