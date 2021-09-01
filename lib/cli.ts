@@ -10,10 +10,6 @@ program
   );
 
 program
-  .option(
-    '-v, --verbose',
-    'Make subtitle-finder to verbose during operation. Useful for debugging and see what\'s going on "under the hood"'
-  )
   .option('-y, --yes', 'download without asking')
   .option(
     '-o, --output <path>',
