@@ -1,0 +1,41 @@
+{
+	"name": "@subtitles/providers",
+	"version": "0.1.0",
+	"description": "Providers are the core of applications, where the subtitles are collected. Each provider exports a unique strategy to gathering data. From legendastv's web scraping from opensubtitle API direct usage, you can collect subtitles from your favorite tv shows and movies",
+	"keywords": [
+		"subtitles-providers",
+		"legendastv",
+		"legendei",
+		"opensubtitles",
+		"scraper",
+		"web-scraping",
+		"crawling",
+		"brasil",
+		"brazil",
+		"pt-br"
+	],
+	"author": "Peter <npmjs@peter.dev.br>",
+	"homepage": "https://github.com/pherval/subtitle-finder/tree/main/packages/providers#readme",
+	"license": "MIT",
+	"main": "lib/index.ts",
+	"directories": {
+		"lib": "lib"
+	},
+	"files": [
+		"lib"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pherval/subtitle-finder.git"
+	},
+	"scripts": {
+		"test": "jest",
+		"test:watch": "npm t -- --watch"
+	},
+	"bugs": {
+		"url": "https://github.com/pherval/subtitle-finder/issues"
+	}
+}
