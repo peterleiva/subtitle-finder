@@ -11,11 +11,11 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
 
   return {
     id,
-    release: filename,
+    title: filename,
     releasedAt: new Date(date),
     fileUrl: url,
     language: lang,
-    downloads,
+    downloads: +downloads,
     provider: 'opensubtitles.org',
   };
 }

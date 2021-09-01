@@ -20,7 +20,7 @@ export default function createScraper(): Scraper<Subtitle> {
         /(\d{2})\/(\d{2})\/(\d{4}) - (\d{2}):(\d{2})/
       );
 
-      const downloads = downloadNode?.[0];
+      const downloads = Number(downloadNode?.[0]);
       let date: Date | undefined;
 
       if (dateNode) {
@@ -62,7 +62,7 @@ export default function createScraper(): Scraper<Subtitle> {
 
     return {
       id,
-      release: title,
+      title,
       source,
       fileUrl,
       uploader,

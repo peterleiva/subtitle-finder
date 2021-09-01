@@ -7,7 +7,6 @@ import { Scraper } from 'providers/types';
 
 const BASE_URL = 'http://legendas.tv';
 const SEARCH_PATH = '/busca';
-const CACHE_PATH = '/tmp/subtitle-finder/cache/legendas-tv';
 
 export default class LegendasTvProvider implements Provider<Subtitle[]> {
   #scraper: Scraper<Subtitle>;
