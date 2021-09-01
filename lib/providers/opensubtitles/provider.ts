@@ -2,9 +2,12 @@ import { Provider, SearchFilter } from 'providers/types';
 import { Subtitle } from 'types';
 import config from 'config';
 import { createHash } from 'crypto';
+import createDebug from 'debug';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import OS from 'opensubtitles-api';
+
+const debug = createDebug('provider:opensubtitles');
 
 function scraper(subtitle: { [key: string]: string }): Subtitle {
   const { lang, url, downloads, id, filename, date } = subtitle;
@@ -13,7 +16,7 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
     id,
     title: filename,
     releasedAt: new Date(date),
-    fileUrl: url,
+    source: url,
     language: lang,
     downloads: +downloads,
     provider: 'opensubtitles.org',
@@ -60,6 +63,8 @@ export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
 
     for (const language in osSubtitles) {
       const langResults = osSubtitles[language];
+
+      debug('found subtitle in %s language - %O', language, langResults);
 
       if (Array.isArray(langResults)) {
         console.info(`found multiple subtitles for language "${language}"`);

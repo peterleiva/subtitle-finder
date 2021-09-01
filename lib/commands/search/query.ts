@@ -1,39 +1,37 @@
-import type { OptionValues } from 'commander';
 import { factory } from 'providers';
 import { Subtitle } from 'types';
 import chalk from 'chalk';
 
 function formatSubtitle({
   id,
-  release,
+  title,
+  releases,
   releasedAt,
-  fileUrl,
+  source,
   language,
   downloads,
   provider,
 }: Subtitle): void {
   console.info(
-    '(%s) %s\n\t%s\n\t%s downloads / %s / %s\n\t%s\n\n',
+    `
+(%s) %s
+    %s
+    Releases: %s
+    %s downloads / %s / %s
+    %s\n
+    `,
     id,
-    chalk.green.bold(release),
+    chalk.green.bold(title),
     chalk.yellow(releasedAt?.toLocaleString() ?? 'No Date'),
-    chalk.red.bold(downloads ?? '?'),
+    releases?.join('\n\t') ?? 'No release. check the title',
+    chalk.red.bold((downloads && !isNaN(downloads)) || '?'),
     chalk.red.bold(language),
     chalk.blue.underline(provider),
-    chalk.blue.underline(fileUrl)
+    chalk.blue.underline(source)
   );
 }
 
-export default async function query(
-  keyword: string[],
-  { verbose }: OptionValues
-): Promise<void> {
-  // listar resultado:
-  //  ano do produto (opcional)
-  //  temporada e episódio (se for TV)
-  //  sinopse (caso exista)
-  //  link para o imdb
-  //
+export default async function query(keyword: string[]): Promise<void> {
   console.time('query');
 
   try {

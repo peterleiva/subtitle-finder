@@ -1,16 +1,37 @@
-export type SubtitleType = 'movie' | 'tv show';
+type MediaYear = number | [number, number | undefined];
+interface MediaMetadata {
+  durationInMS?: number;
+}
+
+interface Media {
+  title: string;
+  synopsis?: string;
+  cast?: string[];
+  year?: MediaYear;
+  imdbLink?: string;
+}
+
+export type Movie = Media & MediaMetadata;
+
+export interface TVShow extends Media {
+  episode: Episode;
+}
+
+interface Episode extends MediaMetadata {
+  number: number;
+  season: number;
+}
 
 export interface Subtitle {
   id: string;
   title: string;
+  provider: string;
+  language: string;
+  source: string; // link to download the subtitle
+  media?: Media;
+  file?: ReadableStream;
   releases?: string[];
-  downloads?: number;
   uploader?: string;
   releasedAt?: Date;
-  source?: string; // html page where link is
-  fileUrl: string; // director link to download the subtitle
-  language: string;
-  provider: string;
-  type?: SubtitleType;
-  synopsis?: string;
+  downloads?: number;
 }
