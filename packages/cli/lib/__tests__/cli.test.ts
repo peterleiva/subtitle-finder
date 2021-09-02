@@ -1,5 +1,3 @@
-import cli from '../cli';
-
 describe('@subtitles/cli', () => {
-  it('needs tests');
+  it.todo('needs tests');
 });

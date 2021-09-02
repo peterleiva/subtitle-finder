@@ -2,7 +2,10 @@ const { resolve } = require('path');
 
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-  displayName: 'CLI',
+  displayName: {
+    name: 'CLI',
+    color: 'blue',
+  },
   preset: 'ts-jest',
   testEnvironment: 'node',
   rootDir: './lib',
