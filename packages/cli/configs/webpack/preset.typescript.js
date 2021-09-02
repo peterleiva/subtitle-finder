@@ -39,15 +39,15 @@ module.exports = function typescriptPreset() {
     },
 
     plugins: [
-      // new ForkTsCheckerWebpackPlugin({
-      //   typescript: { configFile },
-      //   eslint: {
-      //     files: '**/*.{ts,js}',
-      //     options: {
-      //       ignorePattern: ['**/__tests__/**/*', '__mocks__', '__snapshots__'],
-      //     },
-      //   },
-      // }),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: { configFile },
+        eslint: {
+          files: '**/*.{ts,js}',
+          options: {
+            ignorePattern: ['__tests__', '__mocks__', '__snapshots__'],
+          },
+        },
+      }),
     ],
   };
 };

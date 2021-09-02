@@ -1,3 +1,3 @@
 describe('@subtitles/providers', function () {
-    it.todo('needs tests');
+  it.todo('needs tests');
 });

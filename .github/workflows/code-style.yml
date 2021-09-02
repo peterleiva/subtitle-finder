@@ -54,4 +54,4 @@ jobs:
       - name: Installing
         run: npm ci
       - name: Linting the codebase
-        run: npm run typecheck:app
+        run: npm run typecheck
