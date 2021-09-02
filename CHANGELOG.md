@@ -11,13 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   `CLI`
 
-    -   Command query show results to providers
-    -   Cache results
+    -   Top-level CLI which has several sub-commands
+    -   Search subtitles command **by keyword** showing the results back to `stdout`
 
 -   `Providers`
-    -   Legendas.tv
-    -   Legendei.to
-    -   OpenSubtitles
+    -   Provider's factory to create a collection of providers
+    -   Cache results returned by providers
+    -   Web crawler to collect [legendei.to](https://legendei.to) and [legendas.tv](http://legendas.tv)
+    -   Use API to collect Opensubtitles
 
 ## [0.1.0] - 2021-06-03
 
@@ -42,5 +43,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     -   `npm run test` - test the project using jest
     -   `npm run test:watch` - start test in watch mode
 
-[unreleased]: https://github.com/theFiero/subtitle-finder/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/theFiero/subtitle-finder/tag/v0.1.0
+[unreleased]: https://github.com/pherval/subtitle-finder/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/pherval/subtitle-finder/tag/v0.1.0
