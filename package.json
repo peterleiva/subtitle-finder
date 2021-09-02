@@ -19,7 +19,7 @@
 		"prettier": "prettier --ignore-path .gitignore \".\"",
 		"test": "jest",
 		"test:watch": "npm t -- --watch",
-		"prepare": "husky install"
+		"prepare": "is-ci || husky install"
 	},
 	"repository": {
 		"type": "git",
