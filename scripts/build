@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+heading() {
+	head="$1"
+	separator="###############"
+	printf "%-20s %s %20s\n" $separator "$head" $separator
+}
+
+build_tool() {
+	npm run build --workspace "$@"
+}
+
+heading '📦 Building'
+
+build_tool @subtitles/providers
+build_tool @subtitles/cli

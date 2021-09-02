@@ -1,0 +1,4 @@
+__test__
+lib
+*.map.js
+*.tsbuildinfo

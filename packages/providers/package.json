@@ -33,7 +33,8 @@
 		"url": "git+https://github.com/pherval/subtitle-finder.git"
 	},
 	"scripts": {
-		"build": "npm run clean && tsc",
+		"build": "tsc",
+		"prebuild": "npm run clean",
 		"dev": "tsc --watch",
 		"typecheck": "tsc --noEmit",
 		"test": "jest",

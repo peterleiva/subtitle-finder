@@ -12,18 +12,14 @@
 	"author": "Peter <npmjs@peter.dev.br>",
 	"homepage": "https://github.com/pherval/subtitle-finder/tree/main/packages/cli#readme",
 	"license": "MIT",
-	"main": "dist/cli.js",
+	"main": "./bin/cli.js",
 	"bin": {
-		"subtitle-finder": "dist/cli.js",
-		"subtitle-finder-search": "dist/commands/search.js"
+		"subtitle-finder": "./bin/cli.js"
 	},
 	"directories": {
 		"lib": "lib"
 	},
-	"files": [
-		"dist",
-		"lib"
-	],
+	"files": [],
 	"publishConfig": {
 		"access": "public"
 	},
@@ -39,18 +35,31 @@
 		"webpack": "webpack",
 		"typecheck": "tsc --noEmit",
 		"test": "jest",
-		"test:watch": "npm t -- --watch"
+		"test:watch": "npm t -- --watch",
+		"clean": "rimraf dist"
 	},
 	"bugs": {
 		"url": "https://github.com/pherval/subtitle-finder/issues"
 	},
 	"devDependencies": {
-		"@types/debug": "^4.1.7"
+		"@types/debug": "^4.1.7",
+		"webpack": "^5.38.1",
+		"webpack-bundle-analyzer": "^4.4.2",
+		"webpack-cli": "^4.7.0",
+		"webpack-config-organizer": "^0.2.2",
+		"webpack-node-externals": "^3.0.0"
 	},
 	"dependencies": {
 		"@subtitles/providers": "^0.1.0",
 		"chalk": "^4.1.2",
 		"commander": "^8.1.0",
 		"debug": "^4.3.2"
+	},
+	"webpack-config-organizer": {
+		"base": "configs/webpack",
+		"presets": {
+			"path": ".",
+			"prefix": "preset."
+		}
 	}
 }
