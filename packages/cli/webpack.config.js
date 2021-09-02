@@ -17,7 +17,7 @@ module.exports = organizer(['typescript'], ({ clean = false }) => {
     context: path.resolve(__dirname, 'lib'),
 
     entry: {
-      main: 'index.ts',
+      cli: 'cli.ts',
       search: {
         import: 'commands/search/index.ts',
         filename: 'commands/[name].js',

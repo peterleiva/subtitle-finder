@@ -1,7 +1,7 @@
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const configFile = path.resolve(__dirname, '../../tsconfig.app.json');
+const configFile = path.resolve(__dirname, '../../tsconfig.json');
 
 /**
  * TODO: lint on demand using env variable
@@ -22,6 +22,7 @@ module.exports = function typescriptPreset() {
           exclude: [
             /node_modules/,
             /__(tests?|mocks|snapshots)__/,
+            /\.(test|specs?)\.ts$/,
             /tests?/,
             /spec/,
           ],
@@ -38,15 +39,15 @@ module.exports = function typescriptPreset() {
     },
 
     plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        typescript: { configFile },
-        eslint: {
-          files: '**/*.{ts,js}',
-          options: {
-            ignorePattern: ['__tests__', '__mocks__', '__snapshots__'],
-          },
-        },
-      }),
+      // new ForkTsCheckerWebpackPlugin({
+      //   typescript: { configFile },
+      //   eslint: {
+      //     files: '**/*.{ts,js}',
+      //     options: {
+      //       ignorePattern: ['**/__tests__/**/*', '__mocks__', '__snapshots__'],
+      //     },
+      //   },
+      // }),
     ],
   };
 };

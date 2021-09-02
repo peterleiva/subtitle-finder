@@ -13,12 +13,12 @@
 	"homepage": "https://github.com/pherval/subtitle-finder/tree/main/packages/cli#readme",
 	"license": "MIT",
 	"main": "dist/cli.js",
-	"directories": {
-		"lib": "lib"
-	},
 	"bin": {
 		"subtitle-finder": "dist/cli.js",
 		"subtitle-finder-search": "dist/commands/search.js"
+	},
+	"directories": {
+		"lib": "lib"
 	},
 	"files": [
 		"dist",
@@ -32,6 +32,7 @@
 		"url": "git+https://github.com/pherval/subtitle-finder.git"
 	},
 	"scripts": {
+		"start": "node .",
 		"build": "npm run webpack -- --env mode=production",
 		"build:analyzer": "npm run build -- --env presets.analyzer",
 		"build:dev": "npm run build -- --env mode=development",
@@ -42,5 +43,14 @@
 	},
 	"bugs": {
 		"url": "https://github.com/pherval/subtitle-finder/issues"
+	},
+	"devDependencies": {
+		"@types/debug": "^4.1.7"
+	},
+	"dependencies": {
+		"@subtitles/providers": "^0.1.0",
+		"chalk": "^4.1.2",
+		"commander": "^8.1.0",
+		"debug": "^4.3.2"
 	}
 }

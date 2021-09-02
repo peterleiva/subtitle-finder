@@ -1,9 +1,9 @@
 import { Browser, launch, ConsoleMessage, Page } from 'puppeteer';
-import { Subtitle } from 'types';
 import type { URL } from 'url';
 import createDebugger from 'debug';
-import config from 'config';
 import chalk from 'chalk';
+import { Subtitle } from '../types';
+import config from '../config';
 
 const debug = createDebugger('provider:legendei.to:scraper');
 
@@ -21,7 +21,7 @@ export default async function scraper(url: URL): Promise<Subtitle | null> {
   try {
     browser = await launch({ headless: config.headless });
     page = await browser.newPage();
-    // page.on('console', pageConsoleListener);
+    page.on('console', pageConsoleListener);
 
     await page.goto(source);
     debug('navigated to page %s ', source);

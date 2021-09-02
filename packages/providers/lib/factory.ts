@@ -4,8 +4,8 @@ import {
   LegendasTvProvider,
   LegendeiProvider,
   Provider,
-} from 'providers';
-import type { Subtitle } from 'types';
+} from '.';
+import type { Subtitle } from './types';
 import { Deserializer } from './cache-provider';
 
 const deserializer: Deserializer<Subtitle[]> = (

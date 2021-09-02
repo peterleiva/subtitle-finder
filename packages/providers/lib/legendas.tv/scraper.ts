@@ -1,6 +1,5 @@
-import type { Scraper } from 'providers';
 import { ElementHandle } from 'puppeteer';
-import type { Subtitle } from 'types';
+import type { Subtitle, Scraper } from '../types';
 
 export default function createScraper(): Scraper<Subtitle> {
   return async function scraper(handle: ElementHandle): Promise<Subtitle> {
@@ -64,7 +63,6 @@ export default function createScraper(): Scraper<Subtitle> {
       id,
       title,
       source,
-      fileUrl,
       uploader,
       downloads,
       language: 'Português Brasileiro',

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   `CLI`
+
+    -   Command query show results to providers
+    -   Cache results
+
+-   `Providers`
+    -   Legendas.tv
+    -   Legendei.to
+    -   OpenSubtitles
+
 ## [0.1.0] - 2021-06-03
 
 ## Added

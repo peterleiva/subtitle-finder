@@ -1,5 +1,5 @@
-import { Provider, SearchFilter } from './types';
 import { createHash } from 'crypto';
+import { Provider, SearchFilter } from './types';
 import flatCache from 'flat-cache';
 
 export interface Deserializer<T> {

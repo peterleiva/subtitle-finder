@@ -1,6 +1,6 @@
-import { Provider, SearchFilter } from 'providers/types';
-import { Subtitle } from 'types';
-import config from 'config';
+import { Provider, SearchFilter } from '../types';
+import { Subtitle } from '../types';
+import config from '../config';
 import { createHash } from 'crypto';
 import createDebug from 'debug';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

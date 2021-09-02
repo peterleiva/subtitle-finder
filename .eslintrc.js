@@ -1,4 +1,5 @@
 module.exports = {
+  ignorePatterns: 'dist',
   env: {
     es2021: true,
     node: true,

@@ -6,17 +6,10 @@
 	"engines": {
 		"node": ">=14"
 	},
-	"bin": {
-		"subtitle-finder": "dist/main.js",
-		"subtitle-finder-search": "dist/commands/search.js"
-	},
+	"workspaces": [
+		"packages/*"
+	],
 	"scripts": {
-		"start": "node .",
-		"build": "npm run webpack -- --env mode=production",
-		"build:analyzer": "npm run build -- --env presets.analyzer",
-		"build:dev": "npm run build -- --env mode=development",
-		"dev": "npm run build:dev -- --watch",
-		"webpack": "webpack",
 		"lint": "eslint --ignore-path .gitignore --ignore-pattern package-lock.json \".\"",
 		"typecheck": "concurrently --raw \"npm:typecheck:app\" \"npm:typecheck:tests\"",
 		"typecheck:app": "tsc --noEmit -p tsconfig.app.json",
@@ -51,13 +44,9 @@
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-conventional": "^12.1.4",
 		"@tsconfig/node16": "^1.0.2",
-		"@types/debug": "^4.1.7",
-		"@types/flat-cache": "^2.0.0",
 		"@types/jest": "^26.0.23",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
-		"concurrently": "^6.2.0",
-		"dotenv": "^10.0.0",
 		"eslint": "^7.27.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-import-resolver-webpack": "^0.13.1",
@@ -67,6 +56,7 @@
 		"fork-ts-checker-webpack-plugin": "^6.2.10",
 		"husky": "^6.0.0",
 		"jest": "^27.0.4",
+		"lerna": "^4.0.0",
 		"nodemon-webpack-plugin": "^4.5.2",
 		"prettier": "^2.3.0",
 		"ts-jest": "^27.0.2",
@@ -84,16 +74,5 @@
 			"path": ".",
 			"prefix": "preset."
 		}
-	},
-	"dependencies": {
-		"@types/cookie": "^0.4.1",
-		"chalk": "^4.1.2",
-		"commander": "^8.1.0",
-		"cookie": "^0.4.1",
-		"debug": "^4.3.2",
-		"flat-cache": "^3.0.4",
-		"form-urlencoded": "^6.0.4",
-		"opensubtitles-api": "^5.1.2",
-		"puppeteer": "^10.2.0"
 	}
 }

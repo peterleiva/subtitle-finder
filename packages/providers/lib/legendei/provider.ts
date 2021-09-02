@@ -1,10 +1,9 @@
-import { SearchFilter } from 'providers';
-import { Browser, launch } from 'puppeteer';
-import { Subtitle } from 'types';
 import { URL } from 'url';
-import scraper from './scraper';
+import { Browser, launch } from 'puppeteer';
 import createDebugger from 'debug';
-import config from 'config';
+import config from '../config';
+import { SearchFilter, Subtitle } from '../types';
+import scraper from './scraper';
 
 const debug = createDebugger('provider:legendei.to');
 

@@ -1,5 +1,4 @@
-import { factory } from 'providers';
-import { Subtitle } from 'types';
+import { factory, Subtitle } from '@subtitles/providers';
 import chalk from 'chalk';
 
 function formatSubtitle({

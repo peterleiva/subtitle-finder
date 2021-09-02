@@ -1,9 +1,7 @@
 import { URL } from 'url';
 import { Browser, launch } from 'puppeteer';
-import { Provider, SearchFilter } from 'providers';
-import { Subtitle } from 'types';
 import scraper from './scraper';
-import { Scraper } from 'providers/types';
+import { Scraper, Subtitle, Provider, SearchFilter } from '../types';
 
 const BASE_URL = 'http://legendas.tv';
 const SEARCH_PATH = '/busca';
@@ -16,8 +14,6 @@ export default class LegendasTvProvider implements Provider<Subtitle[]> {
   }
 
   async search({ keyword }: SearchFilter): Promise<Subtitle[]> {
-    const cacheKey = 'keyword';
-
     const url = new URL(SEARCH_PATH + '/' + keyword, BASE_URL);
     let browser: Browser | null = null;
     let subtitles: Subtitle[] = [];
