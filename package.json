@@ -4,13 +4,14 @@
 	"description": "subtitle CLI to search subtitles in most popular providers",
 	"main": "dist/main.js",
 	"engines": {
-		"node": ">=14"
+		"node": ">=16"
 	},
 	"workspaces": [
 		"packages/*"
 	],
 	"scripts": {
-		"build": "npm run build -ws",
+		"build": "npm run build --workspaces",
+		"dev": "concurrently --raw \"npm:dev -w=@subtitles/cli\" \"npm:dev -w=@subtitles/providers\"",
 		"lint": "eslint --ignore-path .gitignore --ignore-pattern package-lock.json \".\"",
 		"typecheck": "npm run typecheck --workspaces",
 		"format": "npm run prettier -- --write",
@@ -22,7 +23,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/theFiero/subtitle-finder.git"
+		"url": "git+https://github.com/pherval/subtitle-finder.git"
 	},
 	"keywords": [
 		"crawler",
@@ -33,12 +34,12 @@
 		"pt-br",
 		"cli"
 	],
-	"author": "Fiero <github.gonopores@slmail.me>",
+	"author": "Peter <npmjs@peter.dev.br>",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://github.com/theFiero/subtitle-finder/issues"
+		"url": "https://github.com/pherval/subtitle-finder/issues"
 	},
-	"homepage": "https://github.com/theFiero/subtitle-finder#readme",
+	"homepage": "https://github.com/pherval/subtitle-finder#readme",
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-conventional": "^12.1.4",
@@ -46,6 +47,7 @@
 		"@types/jest": "^26.0.23",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
+		"concurrently": "^6.2.1",
 		"eslint": "^7.27.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-import-resolver-webpack": "^0.13.1",
@@ -57,7 +59,6 @@
 		"jest": "^27.0.4",
 		"jest-watch-select-projects": "^2.0.0",
 		"lerna": "^4.0.0",
-		"nodemon-webpack-plugin": "^4.5.2",
 		"prettier": "^2.3.0",
 		"ts-jest": "^27.0.2",
 		"ts-loader": "^9.2.2",
