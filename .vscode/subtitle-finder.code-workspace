@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "root",
+			"path": ".."
+		},
+		{
+			"name": "CLI",
+			"path": "../packages/cli"
+		},
+		{
+			"name": "Providers",
+			"path": "../packages/providers"
+		}
+	],
+	"settings": {}
+}
