@@ -38,6 +38,7 @@
 		"build:dev": "npm run build -- --env mode=development",
 		"dev": "npm run build:dev -- --watch",
 		"webpack": "webpack",
+		"typecheck": "tsc --noEmit",
 		"test": "jest",
 		"test:watch": "npm t -- --watch"
 	},

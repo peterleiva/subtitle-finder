@@ -10,10 +10,9 @@
 		"packages/*"
 	],
 	"scripts": {
+		"build": "npm run build -ws",
 		"lint": "eslint --ignore-path .gitignore --ignore-pattern package-lock.json \".\"",
-		"typecheck": "concurrently --raw \"npm:typecheck:app\" \"npm:typecheck:tests\"",
-		"typecheck:app": "tsc --noEmit -p tsconfig.app.json",
-		"typecheck:tests": "tsc --noEmit \"**/__tests__/**/*\"",
+		"typecheck": "npm run typecheck --workspaces",
 		"format": "npm run prettier -- --write",
 		"format:check": "npm run prettier -- --check",
 		"prettier": "prettier --ignore-path .gitignore \".\"",
@@ -56,6 +55,7 @@
 		"fork-ts-checker-webpack-plugin": "^6.2.10",
 		"husky": "^6.0.0",
 		"jest": "^27.0.4",
+		"jest-watch-select-projects": "^2.0.0",
 		"lerna": "^4.0.0",
 		"nodemon-webpack-plugin": "^4.5.2",
 		"prettier": "^2.3.0",
