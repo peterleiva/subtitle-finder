@@ -1,7 +1,9 @@
 import { createHash } from 'crypto';
 import flatCache from 'flat-cache';
 import { Provider, SearchFilter } from './types';
+import createDebugger from 'debug';
 
+const debug = createDebugger('providers:cache');
 export interface Deserializer<T> {
   (rawObject: any): T;
 }
@@ -28,11 +30,12 @@ export default class CacheProvider<T> implements Provider<T> {
   }
 
   async search(filter: SearchFilter): Promise<T> {
+    const searchPath = CacheProvider.CACHE_PATH + this.#cache.namespace;
+
     const file = this.#hash.update(filter.keyword.toLowerCase()).digest('hex');
-    const cache = flatCache.load(
-      file + '.json',
-      CacheProvider.CACHE_PATH + '/' + this.#cache.namespace
-    );
+    const cache = flatCache.load(file + '.json', searchPath);
+
+    debug('file %s for query', searchPath);
 
     const cachedResult = cache.getKey('keyword');
 

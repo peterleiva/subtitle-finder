@@ -7,6 +7,9 @@ import {
 } from '.';
 import type { Subtitle } from './types';
 import { Deserializer } from './cache-provider';
+import createDebugger from 'debug';
+
+const debug = createDebugger('providers:factory');
 
 const deserializer: Deserializer<Subtitle[]> = (
   raw: { [key: string]: any }[]
@@ -36,8 +39,12 @@ const deserializer: Deserializer<Subtitle[]> = (
   );
 };
 
-function createOpenSubtitle({ username, password }: PasswordMechanism) {
-  return new OpenSubtitleProvider(username, password);
+async function buildOpenSubtitle({ username, password }: PasswordMechanism) {
+  const provider = new OpenSubtitleProvider(username, password);
+
+  await provider.authenticate();
+
+  return provider;
 }
 
 function createCache(
@@ -56,18 +63,21 @@ type FactoryOptions = Partial<{
   opensubtitles: PasswordMechanism;
 }>;
 
-export default function factory({
+export default async function factory({
   opensubtitles,
-}: FactoryOptions): Provider<Subtitle[]>[] {
+}: FactoryOptions): Promise<Provider<Subtitle[]>[]> {
   const providers = [];
-
   if (opensubtitles)
-    providers.push(
-      createCache('opensubtitle', createOpenSubtitle(opensubtitles))
-    );
+    try {
+      providers.push(
+        createCache('opensubtitle', await buildOpenSubtitle(opensubtitles))
+      );
+    } catch (error) {
+      debug('error trying building opensubtitles provider\n%O', error);
+    }
 
-  return [
+  return providers.concat([
     createCache('legendas-tv', new LegendasTvProvider()),
     createCache('legendei', new LegendeiProvider()),
-  ];
+  ]);
 }

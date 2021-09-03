@@ -59,7 +59,10 @@ export default class OpenSubtitleProvider
   async search({ keyword }: SearchFilter): Promise<Subtitle[]> {
     const subtitles: Subtitle[] = [];
 
-    if (!this.authenticated) return subtitles;
+    if (!this.authenticated) {
+      debug('have to login before searching');
+      return subtitles;
+    }
 
     const results = await this.#os.search({
       sublanguageid: ['pob'].join(),
@@ -78,6 +81,10 @@ export default class OpenSubtitleProvider
       } else {
         subtitles.push(scraper(langResults));
       }
+    }
+
+    if (subtitles.length === 0) {
+      debug('no subtitles found');
     }
 
     return subtitles;
