@@ -2,8 +2,6 @@ name: Publish packages to NPM
 
 on:
   create:
-    types:
-      - created
     branches:
       - main
       - beta
