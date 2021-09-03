@@ -1,11 +1,11 @@
 import { URL } from 'url';
-import { Browser, launch } from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 import createDebugger from 'debug';
 import config from '../config';
 import { SearchFilter, Subtitle } from '../types';
 import scraper from './scraper';
 
-const debug = createDebugger('provider:legendei.to');
+const debug = createDebugger('providers:legendei.to');
 
 export default class LegendeiProvider {
   private static URL = 'http://legendei.to';
@@ -18,11 +18,11 @@ export default class LegendeiProvider {
       LegendeiProvider.URL
     );
 
-    console.info('searching in %s for %s keyword', url, keyword);
+    debug('searching in %s for %s keyword', url, keyword);
     let browser: Browser | null = null;
 
     try {
-      browser = await launch({ headless: config.headless });
+      browser = await puppeteer.launch({ headless: config.headless });
       const page = await browser.newPage();
 
       debug('starting opening page: %s', url);

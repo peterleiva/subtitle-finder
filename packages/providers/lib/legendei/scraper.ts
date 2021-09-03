@@ -1,45 +1,48 @@
-import { Browser, launch, ConsoleMessage, Page } from 'puppeteer';
+import puppeteer from 'puppeteer';
+import type { Browser, ConsoleMessage, Page } from 'puppeteer';
 import type { URL } from 'url';
 import createDebugger from 'debug';
 import chalk from 'chalk';
 import { Subtitle } from '../types';
 import config from '../config';
 
-const debug = createDebugger('provider:legendei.to:scraper');
+const debug = createDebugger('providers:legendei.to:scraper');
+const pageConsole = createDebugger('providers:legendei.to:scraper:console');
 
 export default async function scraper(url: URL): Promise<Subtitle | null> {
-  const source = '' + url;
   const pageConsoleListener = (msg: ConsoleMessage) => {
-    debug('scraper log (%s): ', chalk.blue(url.pathname), msg.text());
+    ['log', 'info', 'error'].some(level => level === msg.type()) &&
+      pageConsole('scraper log (%s): %s', chalk.blue(url.pathname), msg.text());
   };
 
-  debug('scraping page %s', source);
+  debug('scraping page %s', url);
 
   let browser: Browser | null = null;
   let page: Page | null = null;
 
   try {
-    browser = await launch({ headless: config.headless });
+    browser = await puppeteer.launch({ headless: config.headless });
     page = await browser.newPage();
     page.on('console', pageConsoleListener);
 
-    await page.goto(source);
-    debug('navigated to page %s ', source);
+    await page.goto('' + url);
+    debug('sucessfully open page %s. Ready crawling', url);
 
-    const download = await (
+    const downloads = await (
       await page.$('.download-count')
     )?.evaluate(node => {
       const result = node.innerHTML.match(/^(\d+)/);
-      return result && result[1];
+      let downloads;
+      if ((downloads = result?.[1])) {
+        return +downloads;
+      }
     });
 
     const title = await (
       await page.$('h1.post-title.entry-title > a')
     )?.evaluate(node => node.innerHTML);
 
-    // const synopsis = await await page.$('')?.evaluate(node => node.innerHTML);
-
-    const fileUrl = await (
+    const source = await (
       await page.$('.entry-content a[href].buttondown')
     )?.evaluate(anchor => (anchor as HTMLAnchorElement).href);
 
@@ -57,7 +60,9 @@ export default async function scraper(url: URL): Promise<Subtitle | null> {
       return releases;
     });
 
-    const timestamp = await (
+    let releasedAt: Date | undefined;
+
+    await (
       await page.$('.simple-grid-entry-meta-single-date')
     )?.evaluate(node => {
       const dateIndex: { [k: string]: number } = {
@@ -84,30 +89,29 @@ export default async function scraper(url: URL): Promise<Subtitle | null> {
 
         if (!(day && month && year)) return;
 
-        return new Date(+year, dateIndex[month], +day, 0, 0, 0);
+        return new Date(+year, dateIndex[month], +day, 0, 0).toISOString();
       }
     });
 
-    if (!(title && fileUrl)) {
+    if (!(title && source)) {
       throw new Error(`Couldn't scrap title or url to download subtitle`);
     }
 
     const subtitle = {
       id: title,
       title,
-      download,
+      downloads,
       source,
-      releasedAt: timestamp && new Date(timestamp),
-      fileUrl,
+      releasedAt,
       releases,
       language: 'Português Brasileiro',
       provider: 'legendei.to',
     };
 
-    debug('subtitle found', subtitle);
+    debug('subtitle found: %O', subtitle);
     return subtitle;
   } finally {
-    !browser && debug("cann't launch browser for %s ", source);
+    !browser && debug("can't launch browser at %s ", url);
 
     page?.removeAllListeners();
     await browser?.close();
