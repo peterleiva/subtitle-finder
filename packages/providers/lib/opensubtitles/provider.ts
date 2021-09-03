@@ -1,13 +1,11 @@
 import { Provider, SearchFilter } from '../types';
 import { Subtitle } from '../types';
-import config from '../config';
-import { createHash } from 'crypto';
 import createDebug from 'debug';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import OS from 'opensubtitles-api';
 
-const debug = createDebug('provider:opensubtitles');
+const debug = createDebug('providers:opensubtitles');
 
 function scraper(subtitle: { [key: string]: string }): Subtitle {
   const { lang, url, downloads, id, filename, date } = subtitle;
@@ -24,50 +22,49 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
 }
 
 export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
-  #os;
+  #os: OS;
 
-  constructor() {
-    const username = config.openSubtitle.username;
-    const password = config.openSubtitle.password;
-
+  async authenticate(username: string, password: string): Promise<boolean> {
+    debug('logging to OpenSubtitles');
     this.#os = new OS({
       username,
       password,
       useragent: 'UserAgent',
       ssl: true,
     });
+
+    try {
+      await this.#os.login();
+      debug('successfully logged in');
+
+      return true;
+    } catch (error) {
+      debug('failed to trying to login');
+      this.#os = null;
+      throw error;
+    }
   }
 
   async search({ keyword }: SearchFilter): Promise<Subtitle[]> {
-    try {
-      await this.#os.login();
-    } catch (error) {
-      console.error("can't login in OpenSubtitle");
-      throw error;
-    }
+    const subtitles: Subtitle[] = [];
 
-    console.info('successfully logged in opensubtitles');
+    if (!this.#os) return subtitles;
 
-    const osSubtitles = await this.#os.search({
+    const results = await this.#os.search({
       sublanguageid: ['pob'].join(),
       query: keyword,
-      tag: keyword,
       gzip: true,
       limit: 10,
     });
 
-    const subtitles: Subtitle[] = [];
-
-    for (const language in osSubtitles) {
-      const langResults = osSubtitles[language];
-
-      debug('found subtitle in %s language - %O', language, langResults);
+    for (const language in results) {
+      const langResults = results[language];
+      debug('found language %s', language);
+      debug('found subtitle(s) %O', langResults);
 
       if (Array.isArray(langResults)) {
-        console.info(`found multiple subtitles for language "${language}"`);
         subtitles.push(...langResults.map(scraper));
       } else {
-        console.info(`found a single language for "${language}"`);
         subtitles.push(scraper(langResults));
       }
     }
