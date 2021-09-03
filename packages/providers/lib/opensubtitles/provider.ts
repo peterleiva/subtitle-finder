@@ -25,11 +25,8 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
 
 export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
   #os;
-  #hasher;
 
   constructor() {
-    this.#hasher = createHash('md5');
-
     const username = config.openSubtitle.username;
     const password = config.openSubtitle.password;
 
