@@ -1,14 +1,14 @@
 import { createHash } from 'crypto';
-import { Provider, SearchFilter } from './types';
 import flatCache from 'flat-cache';
+import { Provider, SearchFilter } from './types';
 
 export interface Deserializer<T> {
   (rawObject: any): T;
 }
 
-export default class CacheProvider<T> {
+export default class CacheProvider<T> implements Provider<T> {
   private static CACHE_PATH = '/tmp/subtitle-finder/cache/';
-  #hasher;
+  #hash;
   #provider;
   #cache: { namespace: string };
   #deserializer;
@@ -18,7 +18,7 @@ export default class CacheProvider<T> {
     provider: Provider<T>,
     deserializer?: Deserializer<T>
   ) {
-    this.#hasher = createHash('md5');
+    this.#hash = createHash('md5');
     this.#provider = provider;
     this.#cache = Object.defineProperty(cache, 'namespace', {
       value: cache.namespace,
@@ -28,11 +28,9 @@ export default class CacheProvider<T> {
   }
 
   async search(filter: SearchFilter): Promise<T> {
-    const file = this.#hasher
-      .update(filter.keyword.toLowerCase())
-      .digest('hex');
+    const file = this.#hash.update(filter.keyword.toLowerCase()).digest('hex');
     const cache = flatCache.load(
-      file,
+      file + '.json',
       CacheProvider.CACHE_PATH + '/' + this.#cache.namespace
     );
 
