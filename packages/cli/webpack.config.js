@@ -12,7 +12,12 @@ module.exports = organizer(['typescript'], ({ clean = false }) => {
   return {
     target: 'node',
     externalsPresets: { node: true },
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals(),
+      nodeExternals({
+        modulesDir: path.resolve(__dirname, '../../node_modules'),
+      }),
+    ],
 
     context: path.resolve(__dirname, 'lib'),
 
