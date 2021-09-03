@@ -36,22 +36,38 @@ const deserializer: Deserializer<Subtitle[]> = (
   );
 };
 
-export default function factory(): Provider<Subtitle[]>[] {
+function createOpenSubtitle({ username, password }: PasswordMechanism) {
+  return new OpenSubtitleProvider(username, password);
+}
+
+function createCache(
+  namespace: string,
+  provider: Provider<Subtitle[]>
+): CacheProvider<Subtitle[]> {
+  return new CacheProvider({ namespace }, provider, deserializer);
+}
+
+type PasswordMechanism = {
+  username: string;
+  password: string;
+};
+
+type FactoryOptions = Partial<{
+  opensubtitles: PasswordMechanism;
+}>;
+
+export default function factory({
+  opensubtitles,
+}: FactoryOptions): Provider<Subtitle[]>[] {
+  const providers = [];
+
+  if (opensubtitles)
+    providers.push(
+      createCache('opensubtitle', createOpenSubtitle(opensubtitles))
+    );
+
   return [
-    new CacheProvider(
-      { namespace: 'legendas-tv' },
-      new LegendasTvProvider(),
-      deserializer
-    ),
-    new CacheProvider(
-      { namespace: 'opensubtitle' },
-      new OpenSubtitleProvider(),
-      deserializer
-    ),
-    new CacheProvider(
-      { namespace: 'legendei' },
-      new LegendeiProvider(),
-      deserializer
-    ),
+    createCache('legendas-tv', new LegendasTvProvider()),
+    createCache('legendei', new LegendeiProvider()),
   ];
 }
