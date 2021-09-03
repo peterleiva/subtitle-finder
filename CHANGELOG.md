@@ -11,14 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   `CLI`
 
-    -   Top-level CLI which has several sub-commands
-    -   Search subtitles command **by keyword** showing the results back to `stdout`
+    -   Helpers
+    -   Top-level CLI with several commands
+    -   **command search**: query subtitles, for all providers, **by keyword** showing the results back to `stdout`
 
 -   `Providers`
     -   Provider's factory to create a collection of providers
     -   Cache results returned by providers
     -   Web crawler to collect [legendei.to](https://legendei.to) and [legendas.tv](http://legendas.tv)
-    -   Use API to collect Opensubtitles
+    -   Use API to collect [OpenSubtitles](http://opensubtitles.com/)
 
 ## [0.1.0] - 2021-06-03
 
