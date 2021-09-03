@@ -30,7 +30,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/pherval/subtitle-finder.git"
+		"url": "git+https://github.com/pherval/subtitle-finder.git",
+		"directory": "packages/providers"
 	},
 	"scripts": {
 		"build": "tsc",
