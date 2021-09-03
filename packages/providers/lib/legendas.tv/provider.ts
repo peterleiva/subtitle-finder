@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { Browser, launch } from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 import scraper from './scraper';
 import { Scraper, Subtitle, Provider, SearchFilter } from '../types';
 
@@ -19,7 +19,7 @@ export default class LegendasTvProvider implements Provider<Subtitle[]> {
     let subtitles: Subtitle[] = [];
 
     try {
-      browser = await launch();
+      browser = await puppeteer.launch();
 
       const page = await browser.newPage();
       await page.goto('' + url);
