@@ -19,7 +19,10 @@
 	"directories": {
 		"lib": "lib"
 	},
-	"files": [],
+	"files": [
+		"dist",
+		"bin"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
