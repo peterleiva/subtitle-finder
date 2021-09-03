@@ -1,6 +1,6 @@
 {
 	"name": "subtitle-finder",
-	"version": "0.2.0",
+	"version": "0.3.0-beta.0",
 	"description": "subtitle CLI to search subtitles in most popular providers",
 	"private": true,
 	"engines": {
