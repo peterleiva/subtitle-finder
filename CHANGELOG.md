@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0-beta.0]
+
 ### Added
 
 -   `CLI`
@@ -44,5 +46,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     -   `npm run test` - test the project using jest
     -   `npm run test:watch` - start test in watch mode
 
-[unreleased]: https://github.com/pherval/subtitle-finder/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/pherval/subtitle-finder/compare/v0.3.0-beta.0...HEAD
+[0.3.0-beta.0]: https://github.com/pherval/subtitle-finder/compare/v0.1.0...v0.3.0-beta.0
 [0.1.0]: https://github.com/pherval/subtitle-finder/tag/v0.1.0

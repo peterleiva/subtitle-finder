@@ -1,6 +1,6 @@
 {
 	"name": "@subtitles/providers",
-	"version": "0.2.0",
+	"version": "0.3.0-beta.0",
 	"description": "Providers are the core of applications, where the subtitles are collected. Each provider exports a unique strategy for gathering data. From legendastv's web scraping from opensubtitle API usage, you can collect subtitles from your favorite tv shows and movies",
 	"keywords": [
 		"subtitles-providers",
