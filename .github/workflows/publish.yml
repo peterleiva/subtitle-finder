@@ -1,0 +1,54 @@
+name: Publish packages to NPM
+
+on:
+  create:
+    types:
+      - created
+    branches:
+      - main
+      - beta
+
+jobs:
+  test:
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: true
+      matrix:
+        node:
+          - '16.x'
+        os:
+          - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Using Node.js ${{matrix.node}}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node}}
+          cache: 'npm'
+      - name: Installing
+        run: npm ci
+      - name: Testing packages
+        run: npm test
+
+  publish-npm:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node:
+          - '16.x'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node}}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+      - name: Building
+        run: npm run build
+      - name: Publishing with Node.js ${{matrix.node}}
+        run: |
+          npm publish --workspaces --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
