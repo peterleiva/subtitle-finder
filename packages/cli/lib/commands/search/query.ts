@@ -51,7 +51,7 @@ export default async function query(keyword: string[]): Promise<void> {
   }
 
   try {
-    const providers = factory({ opensubtitles });
+    const providers = await factory({ opensubtitles });
 
     const results = await Promise.allSettled(
       providers.map(async provider =>
