@@ -1,7 +1,7 @@
 name: Publish packages to NPM
 
 on:
-  create:
+  release:
     branches:
       - main
       - beta
@@ -28,7 +28,7 @@ jobs:
       - name: Testing packages
         run: npm test
 
-  publish-npm:
+  publish-providers:
     needs: test
     runs-on: ubuntu-latest
     strategy:
@@ -47,6 +47,29 @@ jobs:
         run: npm run build
       - name: Publishing with Node.js ${{matrix.node}}
         run: |
-          npm publish --workspaces --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
+          npm publish --workspace @subtitles/providers --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+
+  publish-cli:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node:
+          - '16.x'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{matrix.node}}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+      - name: Building
+        run: npm run build
+      - name: Publishing with Node.js ${{matrix.node}}
+        run: |
+          npm publish --workspace @subtitles/cli --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
