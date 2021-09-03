@@ -1,6 +1,6 @@
 {
 	"name": "@subtitles/cli",
-	"version": "0.3.0-beta.0",
+	"version": "0.3.0-beta.1",
 	"description": "Your tool to query and download subtitles for your favorites TV Shows and movies. It searches according to your preferences, also it can scan your directory for video files and downloading the best match on the run",
 	"keywords": [
 		"subtitle",
