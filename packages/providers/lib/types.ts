@@ -47,6 +47,10 @@ export interface Provider<T> {
   search(filter: SearchFilter): Promise<T>;
 }
 
+export interface Authenticator {
+  authenticate(): Promise<boolean>;
+}
+
 export interface Scraper<T> {
   (handle: ElementHandle): Promise<T>;
 }

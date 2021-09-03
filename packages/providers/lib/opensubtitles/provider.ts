@@ -1,5 +1,4 @@
-import { Provider, SearchFilter } from '../types';
-import { Subtitle } from '../types';
+import { Provider, SearchFilter, Subtitle, Authenticator } from '../types';
 import createDebug from 'debug';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -21,11 +20,13 @@ function scraper(subtitle: { [key: string]: string }): Subtitle {
   };
 }
 
-export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
+export default class OpenSubtitleProvider
+  implements Provider<Subtitle[]>, Authenticator
+{
   #os: OS;
+  #authenticated: boolean;
 
-  async authenticate(username: string, password: string): Promise<boolean> {
-    debug('logging to OpenSubtitles');
+  constructor(username: string, password: string) {
     this.#os = new OS({
       username,
       password,
@@ -33,14 +34,24 @@ export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
       ssl: true,
     });
 
+    this.#authenticated = false;
+  }
+
+  get authenticated(): boolean {
+    return this.#authenticated;
+  }
+
+  async authenticate(): Promise<boolean> {
+    debug('logging to OpenSubtitles');
+
     try {
       await this.#os.login();
       debug('successfully logged in');
-
+      this.#authenticated = true;
       return true;
     } catch (error) {
       debug('failed to trying to login');
-      this.#os = null;
+      this.#authenticated = false;
       throw error;
     }
   }
@@ -48,7 +59,7 @@ export default class OpenSubtitleProvider implements Provider<Subtitle[]> {
   async search({ keyword }: SearchFilter): Promise<Subtitle[]> {
     const subtitles: Subtitle[] = [];
 
-    if (!this.#os) return subtitles;
+    if (!this.authenticated) return subtitles;
 
     const results = await this.#os.search({
       sublanguageid: ['pob'].join(),
