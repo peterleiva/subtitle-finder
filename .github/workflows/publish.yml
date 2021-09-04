@@ -7,6 +7,7 @@ on:
     branches:
       - main
       - beta
+      - alpha
 
 jobs:
   test:
@@ -49,8 +50,7 @@ jobs:
       - name: Building
         run: npm run build
       - name: Publishing with Node.js ${{matrix.node}}
-        run: |
-          npm publish --workspace @subtitles/providers --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
+        run: ./scripts/publish providers
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 
@@ -72,7 +72,6 @@ jobs:
       - name: Building
         run: npm run build
       - name: Publishing with Node.js ${{matrix.node}}
-        run: |
-          npm publish --workspace @subtitles/cli --tag $([ $GITHUB_REF  = 'refs/heads/beta' ] && echo 'beta' || echo 'latest')
+        run: ./scripts/publish cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

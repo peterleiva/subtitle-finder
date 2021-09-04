@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+branch=${GITHUB_REF#'refs/heads/'}
+tag='latest'
+: ${scope:='@subtitles'}
+
+usage() {
+	print_options() {
+		printf "%-10s %s\n" "$1" "$2"
+	}
+
+	echo "usage: $(basename $0) [options] <workspace>"
+	echo
+	echo "Options for publishing the package"
+	print_options '-s' 'scope of npm package (DEFAULT: @subtitles)'
+	print_options '-h' 'show this helper'
+
+}
+
+packages_basedir() {
+	echo "$(dirname "$0")/../packages"
+}
+
+package_file() {
+	echo "$(packages_basedir)/$workspace/package.json"
+}
+
+package_version() {
+	package="$(package_file)"
+	# Version key/value should be on his own line
+	cat "$package" |
+		grep version |
+		head -1 |
+		awk -F: '{ print $2 }' |
+		sed 's/[",]//g'
+}
+
+published() {
+	npm view $package versions | grep $(package_version) >/dev/null
+}
+
+while getopts s:h option; do
+	case "$option" in
+	s) scope=$OPTARG ;;
+	h)
+		usage
+		exit 0
+		;;
+	esac
+done
+
+shift $(($OPTIND - 1))
+
+workspace="$1"
+package="$scope/$workspace"
+
+if [ -z "$workspace" -o $# -ne 1 ]; then
+	echo "incorrect workspace"
+	usage
+	exit 1
+fi
+
+if [ ! -r "$(package_file)" ]; then
+	echo "package not found: " $(package_file)
+	exit 2
+fi
+
+echo "###### publishing package: "$package" #######"
+
+if published; then
+	printf "Already published %s\n" $(package_version)
+	exit 3
+else
+	# set alpha and beta tags
+	[ "$branch" != 'main' ] && tag="$branch"
+
+	echo "publishing %s@$branch ...\n" $(package_version)
+
+	npm publish --workspace $package --tag $tag
+fi
