@@ -40,7 +40,8 @@
 		"typecheck": "tsc --noEmit",
 		"test": "jest",
 		"test:watch": "npm t -- --watch",
-		"clean": "rimraf dist"
+		"clean": "rimraf dist",
+		"prepublishOnly": "npm run build"
 	},
 	"bugs": {
 		"url": "https://github.com/pherval/subtitle-finder/issues"

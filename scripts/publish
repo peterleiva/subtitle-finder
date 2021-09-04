@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-branch=$(git branch --show-current)
+branch=${GITHUB_REF#'refs/heads/'}
 tag='latest'
 : ${scope:='@subtitles'}
 
@@ -9,7 +9,7 @@ usage() {
 		printf "%-10s %s\n" "$1" "$2"
 	}
 
-	echo "usage: $(basename $0) [options] <workspace>"
+	echo "usage: $(basename $0) [options] <workspace> [publish-options]"
 	echo
 	echo "Options for publishing the package"
 	print_options '-s' 'scope of npm package (DEFAULT: @subtitles)'
@@ -54,7 +54,7 @@ shift $(($OPTIND - 1))
 workspace="$1"
 package="$scope/$workspace"
 
-if [ -z "$workspace" -o $# -ne 1 ]; then
+if [ -z "$workspace" -o $# -le 0 ]; then
 	echo "incorrect workspace"
 	usage
 	exit 1
@@ -67,14 +67,15 @@ fi
 
 # set alpha and beta tags
 [ "$branch" != 'main' -a -n "$branch" ] && tag="$branch"
+version="$(package-version)"
 
-echo "###### publishing package: $package@$tag at $branch #######"
+echo "###### publishing package($package): $version@($tag) at $branch #######"
 
 if published; then
-	printf "Already published %s" $(package_version)
+	echo "Already published $version"
 else
 
-	printf "publishing %s@$branch ..." $(package_version)
+	echo "publishing $version@$tag"
 
-	npm publish --workspace $package --tag $tag
+	npm publish --workspace $package --tag $tag "$@"
 fi
