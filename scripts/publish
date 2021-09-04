@@ -67,7 +67,7 @@ fi
 
 # set alpha and beta tags
 [ "$branch" != 'main' -a -n "$branch" ] && tag="$branch"
-version="$(package-version)"
+version="$(package_version)"
 
 echo "###### publishing package($package): $version@($tag) at $branch #######"
 
