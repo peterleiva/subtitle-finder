@@ -66,15 +66,15 @@ if [ ! -r "$(package_file)" ]; then
 fi
 
 # set alpha and beta tags
-[ "$branch" != 'main' ] && tag="$branch"
-echo "###### publishing package: $package@$branch #######"
+[ "$branch" != 'main' -a -n "$branch" ] && tag="$branch"
+
+echo "###### publishing package: $package@$tag at $branch #######"
 
 if published; then
 	printf "Already published %s" $(package_version)
-	exit 3
 else
 
-	echo "publishing %s@$branch ..." $(package_version)
+	printf "publishing %s@$branch ..." $(package_version)
 
 	npm publish --workspace $package --tag $tag
 fi
