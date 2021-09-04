@@ -1,4 +1,4 @@
-[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html) [![Code Style](https://github.com/theFiero/subtitle-finder/actions/workflows/code-style.yml/badge.svg)](https://github.com/theFiero/subtitle-finder/actions/workflows/code-style.yml)
+[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html) [![Code Quality](https://github.com/pherval/subtitle-finder/actions/workflows/code-quality.yml/badge.svg?branch=main&event=push)](https://github.com/pherval/subtitle-finder/actions/workflows/code-quality.yml)
 
 Run robots to search for TV Shows and Movies subtitles using the biggest subtitle website from Brazil and most used API. They try their best to search using filename, metadata or command line options, either using a CLI or inside your node project.
 
